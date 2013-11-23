@@ -2,3 +2,19 @@
 html, body {
     margin: 20px;
 }
+
+ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+li {
+	float:left;
+	font-size: 2em;
+	margin-right: 1em;
+}
+a {
+	display:block;
+	width:60px;
+}
