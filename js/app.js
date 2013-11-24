@@ -7,8 +7,6 @@ App.Router.map(function() {
   this.resource('posts');
 });
 
-
-
 //
 
 
@@ -46,7 +44,7 @@ App.Post.FIXTURES = [{
 
 App.Post.reopenClass ({
 
-	find: function() {
+	remote: function() {
 			return $.getJSON("http://api.ihackernews.com/page?format=jsonp&callback=?").then(function(response) {
 		        var items = [];
 		 
@@ -60,10 +58,32 @@ App.Post.reopenClass ({
 		}
 	});
 
+App.Post.reopenClass ({
 
-App.PostsRoute = Ember.Route.extend ({
+	local: function() {
+		// return local data here
+
+		return "local data..";
+	}
+
+});
+
+App.IndexRoute = Ember.Route.extend({ 
 	model: function() {
-		document.write("my model" + App.Post.find() );
-		return App.Post.find();
+		return App.Post.local();
 	}
 });
+
+App.PostsRoute = Ember.Route.extend({
+  model: function(){
+    //return this.store.find('title');
+  }
+
+/*App.PostsRoute = Ember.Route.extend ({
+	model: function() {
+		document.write("my model: " + App.Post.local() );
+		//return App.Post.remote();
+		return App.Post.local();
+	}
+	*/
+}); 
