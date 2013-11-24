@@ -1,42 +1,69 @@
 App = Ember.Application.create();
 
+document.write("my placeholder element");
+
 App.Router.map(function() {
   this.resource('about');
   this.resource('posts');
 });
 
-App.PostsRoute = Ember.Route.extend ({
-	model: function() {
-		return App.Post.find();
-	}
-});
 
-App.Store = DS.Store.extend ({
-	revision: 12,
-	adapter: 'DS.FIXTURES'
-});
 
-App.Post = DS.Model.extend ({
-  title: 	DS.attr('string'),
-  auther: 	DS.attr('string'),
-  intro:    DS.attr('string'),
-  extended: DS.attr('string'),
-  publishedAt: DS.attr('date')  
+//
+
+
+/* Store */
+App.ApplicationAdapter = DS.FixtureAdapter;
+
+/* Model */
+
+App.Post = DS.Model.extend({
+  name         : DS.attr(),
+  email        : DS.attr(),
+  bio          : DS.attr(),
+  avatarUrl    : DS.attr(),
+  creationDate : DS.attr()
 });
 
 App.Post.FIXTURES = [{
-	id: 1,
-	title: "Tales of the Bizarre",
-	author: "The Kid",
-	publishedAt: new Date('11-19-2013'),
-	intro: "These are the Times to Try Men's Souls!!",
-	extended: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat"
+  id: 1,
+  name: 'Sponge Bob',
+  email: 'bob@sponge.com',
+  bio: 'Lorem ispum dolor sit amet in voluptate fugiat nulla pariatur.',
+  avatarUrl: 'http://jkneb.github.io/ember-crud/assets/images/avatars/sb.jpg',
+  creationDate: 'Mon, 26 Aug 2013 20:23:43 GMT'
 }, {
-	id: 2,
-	title: "Great Minds Think Alike",
-	author: "The Kid",
-	publishedAt: new Date('11-19-2013'),
-	intro: "This is the Bomb!!",
-	extended: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat"
+  id: 2,
+  name: 'John David',
+  email: 'john@david.com',
+  bio: 'Lorem ispum dolor sit amet in voluptate fugiat nulla pariatur.',
+  avatarUrl: 'http://jkneb.github.io/ember-crud/assets/images/avatars/jk.jpg',
+  creationDate: 'Fri, 07 Aug 2013 10:10:10 GMT'
+}
 
-}]
+];
+
+
+App.Post.reopenClass ({
+
+	find: function() {
+			return $.getJSON("http://api.ihackernews.com/page?format=jsonp&callback=?").then(function(response) {
+		        var items = [];
+		 
+		        response.items.forEach( function (item) {
+		        	console.log(item);
+		       //   items.push( App.Post.create(item) );
+		        });
+		 
+		         return items;
+		      });
+		}
+	});
+
+
+App.PostsRoute = Ember.Route.extend ({
+	model: function() {
+		document.write("my model" + App.Post.find() );
+		return App.Post.find();
+	}
+});

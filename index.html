@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Ember Starter Kit</title>
+<title>Ember - Prototype</title>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
@@ -30,6 +30,7 @@
   </script>
 
   <script type="text/x-handlebars" id="posts">
+  POSTS....
     <div class='container-fluid'>
       <div class='row-fluid'>
         <div class='span3'>
@@ -39,7 +40,7 @@
             </thead>
               {{#each model}}
               <tr><td>
-                <a href="#">{{title}}<span class='muted'> by {{author}}</span></a>
+                <a href="#">{{title}}<span class='muted'> by {{url}}</span></a>
               </td></tr>
               {{/each}}
           </table>
