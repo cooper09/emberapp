@@ -8,19 +8,21 @@ App.Router.map(function() {
 });
 
 //
-
-
 /* Store */
-App.ApplicationAdapter = DS.FixtureAdapter;
+
+App.Store = DS.Store.extend({
+	revision:12,
+	adapter: 'DS.FixtureAdapter',
+});
 
 /* Model */
 
 App.Post = DS.Model.extend({
-  name         : DS.attr(),
-  email        : DS.attr(),
-  bio          : DS.attr(),
-  avatarUrl    : DS.attr(),
-  creationDate : DS.attr()
+  name         : DS.attr('string'),
+  email        : DS.attr('string'),
+  bio          : DS.attr('string'),
+  avatarUrl    : DS.attr('string'),
+  creationDate : DS.attr('date')
 });
 
 App.Post.FIXTURES = [{
@@ -50,7 +52,7 @@ App.Post.reopenClass ({
 		 
 		        response.items.forEach( function (item) {
 		        	console.log(item);
-		       //   items.push( App.Post.create(item) );
+		          items.push( App.Post.createRecord(item) );
 		        });
 		 
 		         return items;
@@ -63,27 +65,34 @@ App.Post.reopenClass ({
 	local: function() {
 		// return local data here
 
-		return "local data..";
+		var	dataArr = [{
+			      name: "Tommy J",
+			      email: "thomasjefferson@gmail.com"
+			    }, {
+			       name: "Georgie W",
+			      email: "georgewashington@gmail.com"
+			    }];
+
+		return dataArr;
 	}
 
-});
-
-App.IndexRoute = Ember.Route.extend({ 
-	model: function() {
-		return App.Post.local();
-	}
 });
 
 App.PostsRoute = Ember.Route.extend({
+  
   model: function(){
-    //return this.store.find('title');
-  }
+   	//return this.store.find('post');
 
-/*App.PostsRoute = Ember.Route.extend ({
-	model: function() {
-		document.write("my model: " + App.Post.local() );
-		//return App.Post.remote();
-		return App.Post.local();
+    myArr = App.Post.local();
+
+    //myArr = App.Post.remote();
+
+    //myArr = App.Post.find();
+
+    //myArr = this.store.find('#/posts');
+
+    return myArr;
 	}
-	*/
-}); 
+
+});
+

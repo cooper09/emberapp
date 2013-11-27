@@ -38,9 +38,12 @@
             <thead>
               <tr><th>Recent Posts</th></tr>
             </thead>
+            <h4>my model: {{model}}</h4>
+
               {{#each model}}
               <tr><td>
-                <a href="#">{{title}}<span class='muted'> by {{url}}</span></a>
+                <span><a href="#">
+                Title: {{name}}<span class='muted'> by {{email}}</span></span></a>
               </td></tr>
               {{/each}}
           </table>
